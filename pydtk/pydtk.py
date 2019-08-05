@@ -382,7 +382,7 @@ class Image(object):
             self.yos = yos
 
             if kargs.get('NAME', False):
-                print(f'Loading {filename}...')
+                print('Loading {}...'.format(filename))
 
     def findheaderkeyword(self, wildcard):
         """
@@ -402,7 +402,7 @@ class Image(object):
 
         for key in self.header.cards:
             if key[0].find(wildcard) != -1:
-                print(f'{key[0]} : {key[1]} /{key[2]}')
+                print('{} : {} /{}'.format(key[0], key[1], key[2]))
 
     def findheadercomment(self, wildcard):
         """
@@ -420,7 +420,7 @@ class Image(object):
 
         for key in self.header.cards:
             if key[2].find(wildcard) != -1:
-                print(f'{key[0]} : {key[1]} /{key[2]}')
+                print('{} : {} /{}'.format(key[0], key[1], key[2]))
 
     def transpose(self):
         """
@@ -488,7 +488,7 @@ class Image(object):
         if kargs.get('RETURN', False):
             return self.filename
         else:
-            print(f'File name: {self.filename}')
+            print('File name: {}'.format(self.filename))
 
     def get_path(self, **kargs):
         """
@@ -502,7 +502,7 @@ class Image(object):
         if kargs.get('RETURN', False):
             return self.path
         else:
-            print(f'Path to file: {self.path}')
+            print('Path to file: {}'.format(self.path))
 
     def get_extension(self, **kargs):
         """
@@ -514,7 +514,7 @@ class Image(object):
         if kargs.get('RETURN', False):
             return self.ext
         else:
-            print(f'extension={self.ext}')
+            print('extension={}'.format(self.ext))
 
     def __getitem__(self, key):
         """
@@ -809,7 +809,7 @@ class Image(object):
         if kargs.get('COUNTS', False):
             pixels = self.shape[0]*self.shape[1]
             non_masked = self.data.count()
-            print(f'Total pixels = {pixels}, masked pixels={pixels - non_masked}')
+            print('Total pixels = {}, masked pixels={}'.format(pixels, pixels - non_masked))
 
     def save(self, filename, path='.'):
         """
@@ -821,7 +821,7 @@ class Image(object):
         """
         hdu = pyfits.PrimaryHDU(self.data.astype(np.uint16), header=self.header)
         # hdu.header=self.header
-        print(f'Writing to {os.path.join(path,filename)}')
+        print('Writing to {}'.format(os.path.join(path,filename)))
         hdu.writeto(os.path.join(path, filename))
 
     def display(self, *window, **kargs):
@@ -879,7 +879,7 @@ class Image(object):
         #     if vmin == 0.0:
         #         vmin = 1
         #     vmax = self.data.max()
-        #     print(f'Cut levels={vmin} and {vmax}')
+        #     print('Cut levels={} and {}'.format(vmin, vmax))
         #     norm = LogNorm(vmin=vmin, vmax=vmax)
         #     print('Log')
 
@@ -902,7 +902,7 @@ class Image(object):
         plt.imshow(self[Xi:Xf, Yi:Yf], vmin=vmin, vmax=vmax,
                    interpolation='nearest', cmap=cmap, origin='lower')
 
-        print(f'Cuts setting: vmin={vmin:.1f} vmax={vmax:.1f}')
+        print('Cuts setting: vmin={:.1f} vmax={:.1f}'.format(vmin, vmax))
 
         plt.xlabel('Ycoor')
         plt.ylabel('Xcoor')
@@ -1165,7 +1165,7 @@ class Image(object):
 
             if kargs.get('PRINT', False):
                 print(
-                    f'[{xi: >5d}:{xf: >5d},{yi: >5d}:{yf: >5d}] std:{aux_std[i, j]:.1f} mean:{aux_mean[i, j]:.1f} median:{aux_median[i, j]:.1f}')
+                    '[{: >5d}:{: >5d},{: >5d}:{: >5d}] std:{:.1f} mean:{:.1f} median:{:.1f}'.format(xi, xf, yi, yf, aux_std[i, j], aux_mean[i, j], aux_median[i, j]))
 
         # Compute statistic
         medianval = np.median(aux_median, axis=None)  # median value of boxes
@@ -1179,15 +1179,15 @@ class Image(object):
 
         # TODO print the correct window used for the computation
         print('')
-        print(f'Window analysed: [{Xi}:{Xf},{Yi}:{Yf}] devided in {nx*ny} subwindows')
-        print(f'MaxVal={self[Xi:Xf, Yi:Yf].max():.2f}  ADUs')
-        print(f'MinVal={self[Xi:Xf, Yi:Yf].min():.2f}  ADUs')
+        print('Window analysed: [{}:{},{}:{}] devided in {} subwindows'.format(Xi, Xf, Yi, Yf, nx*ny))
+        print('MaxVal={:.2f}  ADUs'.format(self[Xi:Xf, Yi:Yf].max()))
+        print('MinVal={:.2f}  ADUs'.format(self[Xi:Xf, Yi:Yf].min()))
         print('')
-        print(f'Mean  = {meanval:.2f} +/-{medstd:.3f} ADUs')
-        print(f'Median= {medianval:.2f} +/-{medstd:.3f} ADUs')
+        print('Mean  = {:.2f} +/-{:.3f} ADUs'.format(meanval, medstd))
+        print('Median= {:.2f} +/-{:.3f} ADUs'.format(medianval, medstd))
         if kargs.get('CF'):
             cf = kargs.get('CF')
-            print(f'RMS = {medstd*cf:.1f} -e')
+            print('RMS = {:.1f} -e'.format(medstd*cf))
         print('')
         # change shape of mean array from 2D to 1D
         # TODO  window is not defined....
@@ -1204,7 +1204,7 @@ class Image(object):
         plt.figure()
         # Compute the number of bins to use
         bins = int(meanval + nstd*medstd)-int(meanval - nstd*medstd)
-        print(f'bins={bins}')
+        print('bins={}'.format(bins))
         # TODO : Check why histogram is wrong with NSTD less than 6
         if kargs.get('LOG', False):
             plt.hist(im, list(np.linspace(int(meanval - nstd*medstd),
@@ -1426,7 +1426,7 @@ class Image(object):
                     name = kargs.get('TITLE', self.filename)
                     name = name.replace(' ', '_')
                 '''
-                plt.savefig(f'RowAvrg_{name}{dtstr}.png')
+                plt.savefig('RowAvrg_{}{}.png'.format(name, dtstr))
 
             return None
         return np.mean(self[x1:x2, self.yi:self.yf], axis=0)
@@ -1598,7 +1598,7 @@ class Image(object):
         """
         self.nx = nx
         self.ny = ny
-        print(f'Xsubwindows={self.nx}, Ysubwindows={self.ny}')
+        print('Xsubwindows={}, Ysubwindows={}'.format(self.nx, self.ny))
 
     def fftcol(self, ReadOutSpeed=100, Vdelay=5, ColStart=None, ColEnd=None, **kargs):
         """
@@ -1688,15 +1688,15 @@ class Image(object):
             return freq, Acum
 
         if kargs.get('PLOT', True):
-            print(f'File: {self.get_filename(RETURN=True)}')
-            print(f'Number of original pixels: {NPix}')
-            print(f'Dimension FFT: {DimFFT} pix')
-            print(f'First and Last column to analyse: {ColS} {ColE}')
-            print(f'Largo freq={len(freq)}')
-            print(f'Each freq bin is equal to: {Fs/DimFFT} Hz')
-            print(f'Maximum freq : {Fs/2}')
-            print(f'Time between vertical pixels: {Ts} s')
-            print(f'Largo hwindow={len(hwindow)}')
+            print('File: {}'.format(self.get_filename(RETURN=True)))
+            print('Number of original pixels: {}'.format(NPix))
+            print('Dimension FFT: {} pix'.format(DimFFT))
+            print('First and Last column to analyse: {} {}'.format(ColS, ColE))
+            print('Largo freq={}'.format(len(freq)))
+            print('Each freq bin is equal to: {} Hz'.format(Fs/DimFFT))
+            print('Maximum freq : {}'.format(Fs/2))
+            print('Time between vertical pixels: {} s'.format(Ts))
+            print('Largo hwindow={}'.format(len(hwindow)))
             plt.figure()
             binstart = kargs.get('BSTART', 2)
             plt.grid()
@@ -1768,24 +1768,24 @@ class Image(object):
         Ts = 1.0/ReadOutSpeed
         Ts = Ts/1000.0
 
-        print(f'File: {self.get_filename(RETURN=True)}')
+        print('File: {}'.format(self.get_filename(RETURN=True)))
 
         if kargs.get('PLOT', True):
-            print(f'Time between horizontal pixels: {Ts}')
+            print('Time between horizontal pixels: {}'.format(Ts))
         # number of pixels
         NPix = self.shape[1]
         RowS = RowStart
         RowE = RowEnd
 
         if kargs.get('PLOT', True):
-            print(f'First and Last row to analyse: {RowS} {RowE}')
+            print('First and Last row to analyse: {} {}'.format(RowS, RowE))
         # dimension of FFT
         DimFFT = 2**(nextpow2(NPix))
         FirstPix = 0
         LastPix = DimFFT
         if kargs.get('PLOT', True):
-            print(f'Number of original pixels: {NPix}')
-            print(f'Dimension FFT: {DimFFT} pix')
+            print('Number of original pixels: {}'.format(NPix))
+            print('Dimension FFT: {} pix'.format(DimFFT))
 
         # compute maximum freq
         Fs = 1/Ts
@@ -1794,15 +1794,15 @@ class Image(object):
         freq = (Fs/2)*np.linspace(0, 1, num=DimFFT//2)
 
         if kargs.get('PLOT', True):
-            print(f'Length freq={freq}')
+            print('Length freq={}'.format(freq))
             print('')
-            print(f'Each freq bin is equal to: {Fs/DimFFT} Hz')
-            print(f'Maximum freq : {Fs/2}')
+            print('Each freq bin is equal to: {} Hz'.format(Fs/DimFFT))
+            print('Maximum freq : {}'.format(Fs/2))
 
         # prepare the hanning window
         hwindow = np.hanning(DimFFT)
         if kargs.get('RETURN', True):
-            print(f'Length hwindow={len(hwindow)}')
+            print('Length hwindow={}'.format(len(hwindow)))
 
         Acum = np.zeros(DimFFT//2)
 
@@ -1884,8 +1884,8 @@ class Image(object):
         bitfreq_0 = []
         bitfreq_1 = []
         print(
-            f'Mean value= {np.mean(self.data[Xi:Xf, Yi:Yf])},  StdDev= {np.std(self.data[Xi:Xf, Yi:Yf])}')
-        print(f'Number of pixels: {totalpix}')
+            'Mean value= {},  StdDev= {}'.format(np.mean(self.data[Xi:Xf, Yi:Yf]), np.std(self.data[Xi:Xf, Yi:Yf])))
+        print('Number of pixels: {}'.format(totalpix))
         for i in range(16):
             bitp = int(2**i)
             maux = np.ma.masked_where(aux & bitp, aux, copy=False)
@@ -1893,7 +1893,7 @@ class Image(object):
             bitfreq_0.append(nbits0)
             nbits1 = totalpix - nbits0
             bitfreq_1.append(nbits1)
-            print(f'Bit value :{bitp:5d} @0: {nbits0:7d}  @1: {nbits1:7d}')
+            print('Bit value :{:5d} @0: {:7d}  @1: {:7d}'.format(bitp, nbits0, nbits1))
 
         xlocations = np.array((list(range(len(bitfreq_0)))))
         width = 0.7

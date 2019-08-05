@@ -54,7 +54,7 @@ def gain(imagelist, *coor, **kargs):
     # check if imagelist are images or filenames
     if all([isinstance(i, str) for i in imagelist]):
         images = [Image(i, ext) for i in imagelist]
-        print(f'Extension={ext}')
+        print('Extension={}'.format(ext))
         b1 = images[0]
         b2 = images[1]
         ff1 = images[2]
@@ -85,10 +85,10 @@ def gain(imagelist, *coor, **kargs):
     # print(ratio)
 
     if kargs.get('VERBOSE', False):
-        print(f'format images X={b1.shape[0]} pix Y={b1.shape[1]} pix')
-        print(f'Nx:{nwx} Ny:{nwy} X1:{x1} X2:{x2} Y1:{y1} Y2:{y2} WX:{(x2-x1)//nwx} WY:{(y2-y1)//nwy}')
+        print('format images X={} pix Y={} pix'.format(b1.shape[0], b1.shape[1]))
+        print('Nx:{} Ny:{} X1:{} X2:{} Y1:{} Y2:{} WX:{} WY:{}'.format(nwx, nwy, x1, x2, y1, y2, (x2-x1)//nwx, (y2-y1)//nwy))
         print('')
-        print(f'meanff2 ={meanff2}')
+        print('meanff2 ={}'.format(meanff2))
 
     dbiasff2 = dbiasff2*ratio
     dbias_ff_diff = dbiasff1 - dbiasff2
@@ -118,7 +118,7 @@ def gain(imagelist, *coor, **kargs):
 
         if kargs.get('VERBOSE', False):
             print(
-                f"X({xi+x1},{xf+x1}) Y({yi+y1},{yf+y2}) Mean:{meansig[i, j]:.2f} stdff:{stdsig[i, j]:.2f}  CF:{cf[i, j]:.2f}")
+                'X({},{}) Y({},{}) Mean:{:.2f} stdff:{:.2f}  CF:{:.2f}'.format(xi+x1, xf+x1, yi+y1, yf+y2, meansig[i, j], stdsig[i, j], cf[i, j]))
 
     if kargs.get('MEDIAN', True):
         ConFac = np.median(cf, axis=None)
@@ -141,9 +141,9 @@ def gain(imagelist, *coor, **kargs):
         plt.figure()
 
     print("*******************************************")
-    print(f"*CF  ={ConFac:.2f} +/-{CFstd:.2f} e/ADU")
-    print(f"*RON ={RONe:.3f} -e")
-    print(f"*RON ={RON:.3f} ADUs")
+    print('*CF  ={:.2f} +/-{:.2f} e/ADU'.format(ConFac, CFstd))
+    print('*RON ={:.3f} -e'.format(RONe))
+    print('*RON ={:.3f} ADUs'.format(RON))
     print("*******************************************")
 
     # change shape of cf array to later compute the standard deviation and also make the histogram
@@ -208,7 +208,7 @@ def gain2(imagelist, *coor, **kargs):
     # check if imagelist are images or filenames
     if all([isinstance(i, str) for i in imagelist]):
         images = [Image(i, ext) for i in imagelist]
-        print(f'Extension={ext}')
+        print('Extension={}'.format(ext))
         b1 = images[0]
         b2 = images[1]
         ff1 = images[2]
@@ -239,10 +239,10 @@ def gain2(imagelist, *coor, **kargs):
     # print(ratio)
 
     if kargs.get('VERBOSE', False):
-        print(f'format images X={b1.shape[0]} pix Y={b1.shape[1]} pix')
-        print(f'Nx:{nwx} Ny:{nwy} X1:{x1} X2:{x2} Y1:{y1} Y2:{y2} WX:{(x2-x1)//nwx} WY:{(y2-y1)//nwy}')
+        print('format images X={} pix Y={} pix'.format(b1.shape[0], b1.shape[1]))
+        print('Nx:{} Ny:{} X1:{} X2:{} Y1:{} Y2:{} WX:{} WY:{}'.format(nwx, nwy, x1, x2, y1, y2, (x2-x1)//nwx, (y2-y1)//nwy))
         print('')
-        print(f'meanff2 ={meanff2}')
+        print('meanff2 ={}'.format(meanff2))
 
     #dbiasff2 = dbiasff2*ratio
     #dbias_ff_diff = dbiasff1 - dbiasff2
@@ -275,7 +275,7 @@ def gain2(imagelist, *coor, **kargs):
 
         if kargs.get('VERBOSE', False):
             print(
-                f"X({xi+x1},{xf+x1}) Y({yi+y1},{yf+y2}) Mean:{meansig[i, j]:.2f} stdff:{stdsig[i, j]:.2f}  CF:{cf[i, j]:.2f}")
+                'X({},{}) Y({},{}) Mean:{:.2f} stdff:{:.2f}  CF:{:.2f}'.format(xi+x1, xf+x1, yi+y1, yf+y2, meansig[i, j], stdsig[i, j], cf[i, j]))
 
     if kargs.get('MEDIAN', True):
         ConFac = np.median(cf, axis=None)
@@ -298,9 +298,9 @@ def gain2(imagelist, *coor, **kargs):
         plt.figure()
 
     print("*******************************************")
-    print(f"*CF  ={ConFac:.2f} +/-{CFstd:.2f} e/ADU")
-    print(f"*RON ={RONe:.3f} -e")
-    print(f"*RON ={RON:.3f} ADUs")
+    print('*CF  ={:.2f} +/-{:.2f} e/ADU'.format(ConFac, CFstd))
+    print('*RON ={:.3f} -e'.format(RONe))
+    print('*RON ={:.3f} ADUs'.format(RON))
     print("*******************************************")
 
     # change shape of cf array to later compute the standard deviation and also make the histogram
@@ -410,7 +410,7 @@ def ptc_ffpairs(imagelist, *coor, **kargs):
     if kargs.get('VERBOSE', False):
         print('Mean signal    Variance')
         for s, v in zip(signal, variance):
-            print(f' {s:6.1f}   {v:6.1f}')
+            print(' {:6.1f}   {:6.1f}'.format(s, v))
 
     # compute polynomial coeficients
     coefts = np.polyfit(signal, variance, order)
@@ -438,11 +438,11 @@ def ptc_ffpairs(imagelist, *coor, **kargs):
     if order == 1:
         cf = 1/coefts[0]
         print(
-            f'Extension: {ext}   CF = {cf:2.3f} -e/ADU   RON = {cf * bias_dif.std()/np.sqrt(2.0):2.3f}')
+            'Extension: {}   CF = {:2.3f} -e/ADU   RON = {:2.3f}'.format(ext, cf, cf * bias_dif.std()/np.sqrt(2.0)))
     elif order == 2:
         cf = 1/coefts[1]
         print(
-            f'Extension: {ext}   CF = {cf:2.3f} -e/ADU   RON = {cf * bias_dif.std()/np.sqrt(2.0):2.3f} -e')
+            'Extension: {}   CF = {:2.3f} -e/ADU   RON = {:2.3f} -e'.format(ext, cf, cf * bias_dif.std()/np.sqrt(2.0)))
 
 
 def ron_adu(b1, b2, *coor, **kargs):
@@ -477,18 +477,18 @@ def ron_adu(b1, b2, *coor, **kargs):
     for i, j, xi, xf, yi, yf in windows:
         std_biasdiff[i, j] = biasdiff[xi:xf, yi:yf].std()/np.sqrt(2)
         if kargs.get('PRINT', False):
-            print(f'[{xi:5}:{xf:5},{yi:5}:{yf:5}] => {std_biasdiff[i, j]:.3}')
+            print('[{:5}:{:5},{:5}:{:5}] => {:.3}'.format(xi, xf, yi, yf, std_biasdiff[i, j]))
 
     diff_median = np.median(std_biasdiff, axis=None)
 
     if kargs.get('RETURN', False):
         return np.median(std_biasdiff, axis=None)  # /np.sqrt(2.0)
     else:
-        print(f'RON @ [{x1}:{x2},{y1}:{y2}] = {np.median(std_biasdiff, axis=None):2.2} ADUs')
+        print('RON @ [{}:{},{}:{}] = {:2.2} ADUs'.format(x1, x2, y1, y2, np.median(std_biasdiff, axis=None)))
     if kargs.get('HIST', False):
         std_biasdiff.shape = (nwx*nwy, )
         diff_std = np.std(std_biasdiff, axis=None)
-        print(f'StdDev = {diff_std:.2}')
+        print('StdDev = {:.2}'.format(diff_std))
         plt.clf()
         plt.hist(std_biasdiff, range=(diff_median - 3*diff_std, diff_median + 3*diff_std), bins=30)
         plt.show()
@@ -925,10 +925,10 @@ def ptc_pixels(biaslist, fflist, ext=0, *coor, **kargs):
 
     if order == 2:
         gain = 1/coefts_nf[1]
-        print(f"GAIN = {1/coefts_nf[1]} -e/ADU  RON = {gain*np.median(stdsig)} -e")
+        print('GAIN = {} -e/ADU  RON = {} -e'.format(1/coefts_nf[1], gain*np.median(stdsig)))
     else:
         gain = 1/coefts_nf[0]
-        print(f"GAIN = {1/coefts_nf[0]} -e/ADU  RON = {gain*np.median(stdsig)} -e")
+        print('GAIN = {} -e/ADU  RON = {} -e'.format(1/coefts_nf[0], gain*np.median(stdsig)))
 
     # ron = gain*np.median(stdsig)
     # print("RON = {} e".format(ron))
@@ -963,20 +963,20 @@ def ptc_2pixels(b1, ff1, ff2, *coor, **kargs):
     step = kargs.get('STEP', 100)  # step size, minimum is 1
     outlayers = kargs.get('OLAYERS', 0.5)  # factor to elliminate outlayers
 
-    print(f"Low = {low}")
-    print(f"High = {high}")
-    print(f"Step = {step}")
-    print(f"outlayers = {outlayers}")
+    print('Low = {}'.format(low))
+    print('High = {}'.format(high))
+    print('Step = {}'.format(step))
+    print('outlayers = {}'.format(outlayers))
 
     order = kargs.get('ORDER', 1)  # order of polynomial regression
     if order > 2:
         order = 2
 
-    print(f"Order = {order}")
+    print('Order = {}'.format(order))
 
     x1, x2, y1, y2 = b1.get_windowcoor(*coor)
 
-    print(f"{x1},{x2},{y1},{y2}")
+    print('{},{},{},{}'.format(x1, x2, y1, y2))
 
     # crop images
     ff1c = ff1.crop(x1, x2, y1, y2)
@@ -1124,7 +1124,7 @@ def ptc_irffpairs(imagelist, *coor, **kargs):
         signal.append(np.mean(ffmean[x1:x2, y1:y2]))
         variance.append(np.var(shotnoise[x1:x2, y1:y2])/2.0)
         stddev.append(np.std(shotnoise[x1:x2, y1:y2])/np.sqrt(2.0))
-        print(f"Signal: {signal[-1]}   Variance: {variance[-1]}")
+        print('Signal: {}   Variance: {}'.format(signal[-1], variance[-1]))
 
     coefts = ma.polyfit(signal, variance, 1)
     # coefts=ma.polyfit(signal[:-3],variance[:-3],1)
@@ -1174,7 +1174,7 @@ def ptcloglog(imagelist, *coor, **kargs):
         signal.append(np.mean(ff[x1:x2, y1:y2]))
         variance.append(np.var(ff[x1:x2, y1:y2]))
         stddev.append(np.std(ff[x1:x2, y1:y2]))
-        print(f"Signal: {signal[-1]}   Variance: {variance[-1]}")
+        print('Signal: {}   Variance: {}'.format(signal[-1], variance[-1]))
 
     coefts = ma.polyfit(signal[:-3], variance[:-3], 1)
     polyts = coefts[0]*signal+coefts[1]
